@@ -1,0 +1,29 @@
+﻿@model Petshop.Areas.Administrator.Models.DANGNHAP
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <h2>Đăng nhập</h2>
+        <div class="container">
+            <div class="row">
+                <form role="form">
+                    <fieldset>
+                        <div class="form-group text-danger">@ViewBag.Login</div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="E-mail" name="tenDN" type="text" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Password" name="pass" type="password" value="">
+                        </div>
+                        <input type="submit" value="Đăng nhập" class="btn btn-lg btn-success btn-block" />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+}

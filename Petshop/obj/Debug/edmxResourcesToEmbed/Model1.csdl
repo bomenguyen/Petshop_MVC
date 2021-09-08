@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PetShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CT_DAT_HANG">
+    <Key>
+      <PropertyRef Name="MaDH" />
+      <PropertyRef Name="MaP" />
+    </Key>
+    <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MaP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SoLuong" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DonGia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DON_DAT_HANG" Relationship="Self.FK_CT_DAT_HANG_DON_DAT_HANG" FromRole="CT_DAT_HANG" ToRole="DON_DAT_HANG" />
+    <NavigationProperty Name="THONGTIN_PET" Relationship="Self.FK_CT_DAT_HANG_THONGTIN_PET" FromRole="CT_DAT_HANG" ToRole="THONGTIN_PET" />
+  </EntityType>
+  <EntityType Name="DANGNHAP">
+    <Key>
+      <PropertyRef Name="tenDN" />
+    </Key>
+    <Property Name="tenDN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="pass" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="DANHMUC">
+    <Key>
+      <PropertyRef Name="MaDM" />
+    </Key>
+    <Property Name="MaDM" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaPL" Type="Int32" Nullable="false" />
+    <Property Name="TenDM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PHANLOAI" Relationship="Self.FK_DANHMUC" FromRole="DANHMUC" ToRole="PHANLOAI" />
+    <NavigationProperty Name="THONGTIN_PET" Relationship="Self.FK_THONGTIN_PET_DANHMUC" FromRole="DANHMUC" ToRole="THONGTIN_PET" />
+  </EntityType>
+  <EntityType Name="DON_DAT_HANG">
+    <Key>
+      <PropertyRef Name="MaDH" />
+    </Key>
+    <Property Name="MaDH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DienthoaiKH" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Ngaydat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Thanhtoan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CT_DAT_HANG" Relationship="Self.FK_CT_DAT_HANG_DON_DAT_HANG" FromRole="DON_DAT_HANG" ToRole="CT_DAT_HANG" />
+    <NavigationProperty Name="KHACHHANG" Relationship="Self.FK_DON_DAT_HANG_KHACHHANG" FromRole="DON_DAT_HANG" ToRole="KHACHHANG" />
+  </EntityType>
+  <EntityType Name="KHACHHANG">
+    <Key>
+      <PropertyRef Name="DienthoaiKH" />
+    </Key>
+    <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DiachiKH" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="DienthoaiKH" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DON_DAT_HANG" Relationship="Self.FK_DON_DAT_HANG_KHACHHANG" FromRole="KHACHHANG" ToRole="DON_DAT_HANG" />
+  </EntityType>
+  <EntityType Name="NCC">
+    <Key>
+      <PropertyRef Name="MaNCC" />
+    </Key>
+    <Property Name="MaNCC" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TeNNCC" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="DIACHI" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="DIENTHOAI" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="THONGTIN_PET" Relationship="Self.FK_THONGTIN_PET_NCC" FromRole="NCC" ToRole="THONGTIN_PET" />
+  </EntityType>
+  <EntityType Name="PHANLOAI">
+    <Key>
+      <PropertyRef Name="MaPL" />
+    </Key>
+    <Property Name="MaPL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenPL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DANHMUCs" Relationship="Self.FK_DANHMUC" FromRole="PHANLOAI" ToRole="DANHMUC" />
+  </EntityType>
+  <EntityType Name="THONGTIN_PET">
+    <Key>
+      <PropertyRef Name="MaP" />
+    </Key>
+    <Property Name="MaP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MaDM" Type="Int32" />
+    <Property Name="TenP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Giaban" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ANH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MaNCC" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CT_DAT_HANG" Relationship="Self.FK_CT_DAT_HANG_THONGTIN_PET" FromRole="THONGTIN_PET" ToRole="CT_DAT_HANG" />
+    <NavigationProperty Name="DANHMUC" Relationship="Self.FK_THONGTIN_PET_DANHMUC" FromRole="THONGTIN_PET" ToRole="DANHMUC" />
+    <NavigationProperty Name="NCC" Relationship="Self.FK_THONGTIN_PET_NCC" FromRole="THONGTIN_PET" ToRole="NCC" />
+  </EntityType>
+  <Association Name="FK_CT_DAT_HANG_DON_DAT_HANG">
+    <End Role="DON_DAT_HANG" Type="Self.DON_DAT_HANG" Multiplicity="1" />
+    <End Role="CT_DAT_HANG" Type="Self.CT_DAT_HANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DON_DAT_HANG">
+        <PropertyRef Name="MaDH" />
+      </Principal>
+      <Dependent Role="CT_DAT_HANG">
+        <PropertyRef Name="MaDH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CT_DAT_HANG_THONGTIN_PET">
+    <End Role="THONGTIN_PET" Type="Self.THONGTIN_PET" Multiplicity="1" />
+    <End Role="CT_DAT_HANG" Type="Self.CT_DAT_HANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="THONGTIN_PET">
+        <PropertyRef Name="MaP" />
+      </Principal>
+      <Dependent Role="CT_DAT_HANG">
+        <PropertyRef Name="MaP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DANHMUC">
+    <End Role="PHANLOAI" Type="Self.PHANLOAI" Multiplicity="1" />
+    <End Role="DANHMUC" Type="Self.DANHMUC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PHANLOAI">
+        <PropertyRef Name="MaPL" />
+      </Principal>
+      <Dependent Role="DANHMUC">
+        <PropertyRef Name="MaPL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_THONGTIN_PET_DANHMUC">
+    <End Role="DANHMUC" Type="Self.DANHMUC" Multiplicity="0..1" />
+    <End Role="THONGTIN_PET" Type="Self.THONGTIN_PET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DANHMUC">
+        <PropertyRef Name="MaDM" />
+      </Principal>
+      <Dependent Role="THONGTIN_PET">
+        <PropertyRef Name="MaDM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DON_DAT_HANG_KHACHHANG">
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="0..1" />
+    <End Role="DON_DAT_HANG" Type="Self.DON_DAT_HANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHACHHANG">
+        <PropertyRef Name="DienthoaiKH" />
+      </Principal>
+      <Dependent Role="DON_DAT_HANG">
+        <PropertyRef Name="DienthoaiKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_THONGTIN_PET_NCC">
+    <End Role="NCC" Type="Self.NCC" Multiplicity="0..1" />
+    <End Role="THONGTIN_PET" Type="Self.THONGTIN_PET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NCC">
+        <PropertyRef Name="MaNCC" />
+      </Principal>
+      <Dependent Role="THONGTIN_PET">
+        <PropertyRef Name="MaNCC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PetShopEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CT_DAT_HANG" EntityType="Self.CT_DAT_HANG" />
+    <EntitySet Name="DANGNHAPs" EntityType="Self.DANGNHAP" />
+    <EntitySet Name="DANHMUCs" EntityType="Self.DANHMUC" />
+    <EntitySet Name="DON_DAT_HANG" EntityType="Self.DON_DAT_HANG" />
+    <EntitySet Name="KHACHHANGs" EntityType="Self.KHACHHANG" />
+    <EntitySet Name="NCCs" EntityType="Self.NCC" />
+    <EntitySet Name="PHANLOAIs" EntityType="Self.PHANLOAI" />
+    <EntitySet Name="THONGTIN_PET" EntityType="Self.THONGTIN_PET" />
+    <AssociationSet Name="FK_CT_DAT_HANG_DON_DAT_HANG" Association="Self.FK_CT_DAT_HANG_DON_DAT_HANG">
+      <End Role="DON_DAT_HANG" EntitySet="DON_DAT_HANG" />
+      <End Role="CT_DAT_HANG" EntitySet="CT_DAT_HANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CT_DAT_HANG_THONGTIN_PET" Association="Self.FK_CT_DAT_HANG_THONGTIN_PET">
+      <End Role="THONGTIN_PET" EntitySet="THONGTIN_PET" />
+      <End Role="CT_DAT_HANG" EntitySet="CT_DAT_HANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DANHMUC" Association="Self.FK_DANHMUC">
+      <End Role="PHANLOAI" EntitySet="PHANLOAIs" />
+      <End Role="DANHMUC" EntitySet="DANHMUCs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_THONGTIN_PET_DANHMUC" Association="Self.FK_THONGTIN_PET_DANHMUC">
+      <End Role="DANHMUC" EntitySet="DANHMUCs" />
+      <End Role="THONGTIN_PET" EntitySet="THONGTIN_PET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DON_DAT_HANG_KHACHHANG" Association="Self.FK_DON_DAT_HANG_KHACHHANG">
+      <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+      <End Role="DON_DAT_HANG" EntitySet="DON_DAT_HANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_THONGTIN_PET_NCC" Association="Self.FK_THONGTIN_PET_NCC">
+      <End Role="NCC" EntitySet="NCCs" />
+      <End Role="THONGTIN_PET" EntitySet="THONGTIN_PET" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

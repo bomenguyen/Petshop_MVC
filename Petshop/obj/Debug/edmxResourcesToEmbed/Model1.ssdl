@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PetShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CT_DAT_HANG">
+    <Key>
+      <PropertyRef Name="MaDH" />
+      <PropertyRef Name="MaP" />
+    </Key>
+    <Property Name="MaDH" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="MaP" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="SoLuong" Type="varchar" MaxLength="20" />
+    <Property Name="DonGia" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DANGNHAP">
+    <Key>
+      <PropertyRef Name="tenDN" />
+    </Key>
+    <Property Name="tenDN" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="pass" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="DANHMUC">
+    <Key>
+      <PropertyRef Name="MaDM" />
+    </Key>
+    <Property Name="MaDM" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaPL" Type="int" Nullable="false" />
+    <Property Name="TenDM" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DON_DAT_HANG">
+    <Key>
+      <PropertyRef Name="MaDH" />
+    </Key>
+    <Property Name="MaDH" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="DienthoaiKH" Type="varchar" MaxLength="50" />
+    <Property Name="Ngaydat" Type="varchar" MaxLength="50" />
+    <Property Name="Thanhtoan" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="KHACHHANG">
+    <Key>
+      <PropertyRef Name="DienthoaiKH" />
+    </Key>
+    <Property Name="HoTen" Type="nvarchar" MaxLength="50" />
+    <Property Name="DiachiKH" Type="nvarchar" MaxLength="200" />
+    <Property Name="DienthoaiKH" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="NCC">
+    <Key>
+      <PropertyRef Name="MaNCC" />
+    </Key>
+    <Property Name="MaNCC" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="TeNNCC" Type="nvarchar" MaxLength="30" />
+    <Property Name="DIACHI" Type="nvarchar" MaxLength="40" />
+    <Property Name="DIENTHOAI" Type="varchar" MaxLength="11" />
+  </EntityType>
+  <EntityType Name="PHANLOAI">
+    <Key>
+      <PropertyRef Name="MaPL" />
+    </Key>
+    <Property Name="MaPL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenPL" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="THONGTIN_PET">
+    <Key>
+      <PropertyRef Name="MaP" />
+    </Key>
+    <Property Name="MaP" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="MaDM" Type="int" />
+    <Property Name="TenP" Type="nvarchar" MaxLength="100" />
+    <Property Name="MoTa" Type="nvarchar(max)" />
+    <Property Name="Giaban" Type="varchar" MaxLength="20" />
+    <Property Name="ANH" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaNCC" Type="varchar" MaxLength="6" />
+  </EntityType>
+  <Association Name="FK_CT_DAT_HANG_DON_DAT_HANG">
+    <End Role="DON_DAT_HANG" Type="Self.DON_DAT_HANG" Multiplicity="1" />
+    <End Role="CT_DAT_HANG" Type="Self.CT_DAT_HANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DON_DAT_HANG">
+        <PropertyRef Name="MaDH" />
+      </Principal>
+      <Dependent Role="CT_DAT_HANG">
+        <PropertyRef Name="MaDH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CT_DAT_HANG_THONGTIN_PET">
+    <End Role="THONGTIN_PET" Type="Self.THONGTIN_PET" Multiplicity="1" />
+    <End Role="CT_DAT_HANG" Type="Self.CT_DAT_HANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="THONGTIN_PET">
+        <PropertyRef Name="MaP" />
+      </Principal>
+      <Dependent Role="CT_DAT_HANG">
+        <PropertyRef Name="MaP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DANHMUC">
+    <End Role="PHANLOAI" Type="Self.PHANLOAI" Multiplicity="1" />
+    <End Role="DANHMUC" Type="Self.DANHMUC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PHANLOAI">
+        <PropertyRef Name="MaPL" />
+      </Principal>
+      <Dependent Role="DANHMUC">
+        <PropertyRef Name="MaPL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DON_DAT_HANG_KHACHHANG">
+    <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="0..1" />
+    <End Role="DON_DAT_HANG" Type="Self.DON_DAT_HANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHACHHANG">
+        <PropertyRef Name="DienthoaiKH" />
+      </Principal>
+      <Dependent Role="DON_DAT_HANG">
+        <PropertyRef Name="DienthoaiKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_THONGTIN_PET_DANHMUC">
+    <End Role="DANHMUC" Type="Self.DANHMUC" Multiplicity="0..1" />
+    <End Role="THONGTIN_PET" Type="Self.THONGTIN_PET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DANHMUC">
+        <PropertyRef Name="MaDM" />
+      </Principal>
+      <Dependent Role="THONGTIN_PET">
+        <PropertyRef Name="MaDM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_THONGTIN_PET_NCC">
+    <End Role="NCC" Type="Self.NCC" Multiplicity="0..1" />
+    <End Role="THONGTIN_PET" Type="Self.THONGTIN_PET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NCC">
+        <PropertyRef Name="MaNCC" />
+      </Principal>
+      <Dependent Role="THONGTIN_PET">
+        <PropertyRef Name="MaNCC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PetShopModelStoreContainer">
+    <EntitySet Name="CT_DAT_HANG" EntityType="Self.CT_DAT_HANG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DANGNHAP" EntityType="Self.DANGNHAP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DANHMUC" EntityType="Self.DANHMUC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DON_DAT_HANG" EntityType="Self.DON_DAT_HANG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KHACHHANG" EntityType="Self.KHACHHANG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NCC" EntityType="Self.NCC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PHANLOAI" EntityType="Self.PHANLOAI" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="THONGTIN_PET" EntityType="Self.THONGTIN_PET" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CT_DAT_HANG_DON_DAT_HANG" Association="Self.FK_CT_DAT_HANG_DON_DAT_HANG">
+      <End Role="DON_DAT_HANG" EntitySet="DON_DAT_HANG" />
+      <End Role="CT_DAT_HANG" EntitySet="CT_DAT_HANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CT_DAT_HANG_THONGTIN_PET" Association="Self.FK_CT_DAT_HANG_THONGTIN_PET">
+      <End Role="THONGTIN_PET" EntitySet="THONGTIN_PET" />
+      <End Role="CT_DAT_HANG" EntitySet="CT_DAT_HANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DANHMUC" Association="Self.FK_DANHMUC">
+      <End Role="PHANLOAI" EntitySet="PHANLOAI" />
+      <End Role="DANHMUC" EntitySet="DANHMUC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DON_DAT_HANG_KHACHHANG" Association="Self.FK_DON_DAT_HANG_KHACHHANG">
+      <End Role="KHACHHANG" EntitySet="KHACHHANG" />
+      <End Role="DON_DAT_HANG" EntitySet="DON_DAT_HANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_THONGTIN_PET_DANHMUC" Association="Self.FK_THONGTIN_PET_DANHMUC">
+      <End Role="DANHMUC" EntitySet="DANHMUC" />
+      <End Role="THONGTIN_PET" EntitySet="THONGTIN_PET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_THONGTIN_PET_NCC" Association="Self.FK_THONGTIN_PET_NCC">
+      <End Role="NCC" EntitySet="NCC" />
+      <End Role="THONGTIN_PET" EntitySet="THONGTIN_PET" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,29 @@
+
+/** ADD YOUR AWESOME CODES HERE **/
+.list-product-title{
+	width:100%;
+	text-transform:uppercase;
+	margin:0px 5px;
+}
+.input{
+    height: 40px;
+    width: 1100px
+}
+    
+    
+.Kiem{
+        width: 100px;
+        height: 40px;
+        border-color: black;
+        background-color:black;
+    }
+
+.list-product-subtitle{
+	width:100%;
+	margin:0px 5px;
+}
+.card-product{
+	margin:0px 5px;
+	width:270px;
+	
+}

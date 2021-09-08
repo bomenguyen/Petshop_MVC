@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Site Metas -->
+    <title>PETSHOP</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="~/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="~/Areas/user/Areas/user/images/apple-touch-icon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Areas/user/Content/css/bootstrap.min.css">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="~/Areas/user/Content/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="~/Areas/user/Content/css/responsive.css">
+    <!-- Custom CSS -->
+
+    <link href="~/Areas/User/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Areas/User/Content/css/custom.css" rel="stylesheet" />
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <!-- Start Main Top -->
+    <header class="main-header">
+        <!-- Start MENU -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/images/logo.png" class="logo" alt=""></a>
+                </div>
+                <!-- End Header Navigation -->
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item active"><a href="@Url.Action("Index", "Home")" class="nav-link">Home</a></li>
+                        @{
+                            Petshop.Areas.User.Models.UserContent db = new Petshop.Areas.User.Models.UserContent();
+                              <li class="dropdown">
+                                   @foreach (var pl in db.PHANLOAIs) {
+                                    <li class="dropdown ">
+                                    <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">@pl.TenPL</a>
+                                    <ul class="dropdown-menu">
+                                        @foreach (var dm in db.DANHMUCs.Where(c => c.MaPL == pl.MaPL))
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("ProductsByProType", "Products", new { id = dm.MaDM, page = 1 })">@dm.TenDM</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li> }
+                            </li>
+                        }
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">TÀI KHOẢN</a>
+                                <ul class="dropdown-menu">
+                                 <li><a href="@Url.Action("Login", "Account")">ĐĂNG NHẬP</a></li>
+                                    <li><a href="">ĐĂNG KÝ</a></li>*
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                    <!-- Start GIỎ HÀNG -->
+                    <div class="attr-nav">
+                        <ul>
+                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                            <li class="side-menu">
+                            <li class="tui"> 
+                                @{
+                                    List<Petshop.Areas.User.Models.CartItem> gio = Session["giohang"] as List<Petshop.Areas.User.Models.CartItem>;
+                                    if (gio == null || gio.Count == 0)
+                                    {
+                                        <a href="@Url.Action("Index", "GioHang")"><img src="~/images/gh.jpg" height="20px" width="25px" /><span class="badge">0</span></a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Index", "GioHang")"><img src="~/images/gh.jpg" height="20px" width="25px" /><span class="badge">@gio.Count</span></a>
+                                    }
+                                }
+                            </li>
+                            </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Atribute Navigation -->
+                </div>
+
+
+            </nav>
+            <!-- End Navigation -->
+        </header>
+        <!-- End Main Top -->
+        <!-- Start Top Search -->
+        <div class="top-search">
+            <div class="container">
+                <div class="input">
+                    @using (Ajax.BeginForm("SearchByName", "Products", new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "Get" }))
+                    {
+                        <input type="text" class="form-control" placeholder="Search" name="name">
+                        <button class="Kiem" style="background-color:black"> </button> 
+                    }
+                   
+                </div>
+            </div>
+        </div>
+        <!-- End Top Search -->
+        <div>
+            @RenderBody()
+        </div>
+
+        <!-- Start Footer  -->
+        <footer>
+            <div class="footer-main">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div class="footer-top-box">
+                                <h3>Business Time</h3>
+                                <ul class="list-time">
+                                    <li>Monday - Friday: 08.00am to 05.00pm</li>
+                                    <li>Saturday: 10.00am to 08.00pm</li>
+                                    <li>Sunday: <span>Closed</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div class="footer-top-box">
+                                <h3>Social Media</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <ul>
+                                    <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-5 col-md-12 col-sm-12">
+                            <div class="footer-widget">
+                                <h4>About PetShop</h4>
+                                <p>Hệ thống trại nhân giống, cung cấp phụ kiện, Spa, Khách sạn và huấn luyện chó, mèo cảnh thuần chủng. Trải qua gần 9 năm phát triển AZPet Shop đã nhân giống thành công những giống chó, mèo cảnh Hot nhất hiện nay như: Alaska, Poodle, Phốc Sóc, Bulldog, Husky, Corgi, Doberman, Pug, Golden Retriever… Mèo Anh, Mèo Ba tư, Mèo Munchkin, Mèo Scottish, Mèo Bengal, Mèo Sphynx…</p>
+                                <p>Đến thời điểm hiện tại PETSHOP đã xuất bán chó, mèo cảnh cho các khách hàng tại nhiều quốc gia trên thế giới, như: Indonexia, Thái Lan, Malaysia, Singapore, Hàn Quốc, Nga, Đức, Phần Lan.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12">
+                            <div class="footer-link-contact">
+                                <h4>Contact Us</h4>
+                                <ul>
+                                    <li>
+                                        <p><i class="fas fa-map-marker-alt"></i>Address: 300A Nguyễn Tất Thành  <br>quận 4, Tp.HCM. </p>
+                                    </li>
+                                    <li>
+                                        <p><i class="fas fa-phone-square"></i>Phone: <a href="#">+1-888 705 770</a></p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <i class="fas fa-envelope"></i>Email:
+                                            <a href="#">a@gmail.com</a>
+                                            
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer  -->
+
+        <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+        <!-- ALL JS FILES -->
+        <script src="~/Areas/User/Content/js/jquery-3.2.1.min.js"></script>
+        <script src="~/Areas/User/Content/js/popper.min.js"></script>
+        <script src="~/Areas/User/Content/js/bootstrap.min.js"></script>
+        <!-- ALL PLUGINS -->
+        <script src="~/Areas/User/Content/js/jquery.superslides.min.js"></script>
+        <script src="~/Areas/User/Content/js/bootstrap-select.js"></script>
+    <script src="~/Areas/User/Content/js/inewsticker.js"></script>
+    <script src="~/Areas/User/Content/js/bootsnav.js"></script>
+    <script src="~/Areas/User/Content/js/images-loded.min.js"></script>
+    <script src="~/Areas/User/Content/js/isotope.min.js"></script>
+    <script src="~/Areas/User/Content/js/owl.carousel.min.js"></script>
+    <script src="~/Areas/User/Content/js/baguetteBox.min.js"></script>
+    <script src="~/Areas/User/Content/js/form-validator.min.js"></script>
+    <script src="~/Areas/User/Content/js/custom.js"></script>
+    <script src="~/Areas/User/Content/js/contact-form-script.js"></script>
+
+
+    </body>
+
+</html>

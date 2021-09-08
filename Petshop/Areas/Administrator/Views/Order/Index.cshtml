@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Petshop.Areas.Administrator.Models.CT_DAT_HANG>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<h2>Đơn đặt hàng</h2>
+<div class="text-warning">
+    @ViewBag.CusError
+</div>
+<hr />
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="btn btn-primary btn-default" href="@Url.Action("Index", "Order")" role="button">Làm mới</a>
+            <div class="form-group input-group navbar-right">
+                @using (Ajax.BeginForm("Index", "Order", new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "Get" }))
+                {
+                    <input type="search" name="name" class="form-control" style="width:300px" placeholder="Nhập đơn hàng..." />
+                    <button class="btn btn-success" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                }
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive table-bordered">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            @*<th>Mã đơn hàng</th>*@
+                            <th>Tên khách hàng</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Ngày đặt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int i = 0;}
+                        @foreach (var item in Model)
+                        {
+                            string name = @item.THONGTIN_PET.ANH + ".jpg";
+                            i++;
+                        <tr>
+                            <td>@i</td>
+                            <td>@Html.DisplayFor(modelItem => item.DON_DAT_HANG.KHACHHANG.HoTen)</td>
+                            <td>@Html.DisplayFor(modelItem => item.MaDH)</td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.THONGTIN_PET.TenP)
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DonGia)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DON_DAT_HANG.Ngaydat)</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>

@@ -1,0 +1,61 @@
+﻿@model PagedList.IPagedList<Petshop.Areas.User.Models.THONGTIN_PET>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "ProductsByProType";
+    Layout = "~/Areas/User/Views/Shared/_Layout.cshtml";
+}
+@{
+    Petshop.Repository.ProductDAO proDAO = new Petshop.Repository.ProductDAO();
+    Petshop.Areas.User.Models.UserContent db = new Petshop.Areas.User.Models.UserContent();
+}
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <img src="~/images/banner.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item active">Sản phẩm </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+<div class="shop-box-inner">
+    <center><h1>Sản phẩm</h1></center>
+    <div class="container">
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                string name = @item.ANH + ".jpg";
+                <div class="product-group">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-12">
+                            <div class="card card-product ">
+                                <img class='card-img-top' src='~/images/@name' alt='Card image cap'>
+                                <div class="card-body">
+                                    @if (item.TenP.Length > 20)
+                                    {
+                                        <a href="@Url.Action("ProductDetail", "Products", new { id=item.MaP })" data-toggle="tooltip" title="@item.TenP">@item.TenP.Substring(0, 19) . . .</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("ProductDetail", "Products", new { id=item.MaP })">@item.TenP</a>
+                                    }
+                                    <br/>
+                                    <label> @proDAO.formatNumber(item.Giaban) VNĐ</label><br />
+                                    <a class="btn hvr-hover" data-fancybox-close="" href="@Url.Action("ThemVaoGio", "GioHang", new { SanPhamID = item.MaP})">Thêm vào giỏ</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <center>@Html.PagedListPager(Model, page => Url.Action("ProductsByProType", "Products", new { page }))</center>
+</div>
+   

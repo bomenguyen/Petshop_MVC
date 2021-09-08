@@ -1,0 +1,47 @@
+﻿@model Petshop.Areas.User.Models.DANGNHAP
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Areas/User/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+
+<div class="container">
+    <h2>Đăng nhập</h2>
+    <div class="container">
+        <div class="row">
+            <form role="form">
+                <fieldset>
+                    <div class="form-group text-danger">@ViewBag.Login</div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="E-mail" name="tenDN" type="text" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Password" name="pass" type="password" value="">
+                    </div>
+                    <input type="submit" value="Đăng nhập" class="btn btn-lg btn-success btn-block" />
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    @*<form class="mt-3 collapse review-form-box" id="formLogin">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+
+                    <label for="InputEmail" class="mb-0">UserName</label>
+                    <input type="text" class="form-control" id="InputEmail" name="TenTK" placeholder="Enter Username">
+                </div>
+                <div class="form-group col-md-9">
+                    <label for="InputPassword" class="mb-0">Password</label>
+                    <input type="password" class="form-control" id="InputPassword" name="Matkhau" placeholder="Password">
+                </div>
+            </div>
+            <button type="submit" class="btn hvr-hover">Login</button>
+        </form>*@
+</div>
+}
